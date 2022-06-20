@@ -1,4 +1,4 @@
-package com.osyrs.sfgpet.sfgpetclinic;
+package com.osyrs.sfgpetclinic;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
