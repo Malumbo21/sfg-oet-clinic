@@ -6,8 +6,10 @@ import com.osyrs.sfgpetclinic.services.OwnerService;
 import com.osyrs.sfgpetclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RestController;
 
 @Component
+@RestController
 public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
@@ -27,10 +29,16 @@ public class DataLoader implements CommandLineRunner {
         ownerService.save(owner1);
 
         var owner2 = new Owner();
-        owner2.setId(1L);
+        var id = 2L;
+        owner2.setId(id);
         owner2.setFirstName("Kaluwe");
         owner2.setLastName("Mutemwa");
-
+        /* DataSource dataSource = DataSourceBuilder.create()
+                .url("")
+                .username("")
+                .password("")
+                .driverClassName("")
+                .build();*/
         ownerService.save(owner2);
 
         System.out.println("Loaded Owners.......");
