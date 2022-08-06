@@ -1,17 +1,16 @@
 package com.osyrs.sfgpetclinic.bootstrap;
 
-import com.osyrs.sfgpetclinic.model.Owner;
-import com.osyrs.sfgpetclinic.model.Pet;
-import com.osyrs.sfgpetclinic.model.PetType;
-import com.osyrs.sfgpetclinic.model.Vet;
+import com.osyrs.sfgpetclinic.model.*;
 import com.osyrs.sfgpetclinic.services.OwnerService;
 import com.osyrs.sfgpetclinic.services.PetTypeService;
+import com.osyrs.sfgpetclinic.services.SpecialtyService;
 import com.osyrs.sfgpetclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Component
 @RestController
@@ -19,15 +18,24 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialtyService specialtyService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialtyService = specialtyService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        int count = petTypeService.findAll().size();
+        if(count==0) {
+            loadData();
+        }
+    }
+
+    private void loadData() {
         var dogType = savePetType("Dog");
         var catType = savePetType("Cat");
         System.out.println("Loaded PetTypes.......");
@@ -42,9 +50,20 @@ public class DataLoader implements CommandLineRunner {
         ownerService.save(owner2);
         System.out.println("Loaded Owners.......");
 
-        var vet1 = saveVet("Lenganji","Sinkamba");
-        var vet2 = saveVet("Suwilanji","Sinkamba");
+        Specialty radiology = getSpecialty("Radiology");
+        var surgery = getSpecialty("Surgery");
+        var dentistry = getSpecialty("Dentistry");
+        System.out.println("Loaded Specialties.....");
+
+        var vet1 = saveVet("Lenganji","Sinkamba",surgery);
+        var vet2 = saveVet("Suwilanji","Sinkamba",radiology);
         System.out.println("Loaded Vets.......");
+    }
+
+    private Specialty getSpecialty(String description) {
+        var specialty = new Specialty();
+        specialty.setDescription(description);
+        return specialtyService.save(specialty);
     }
 
     private Pet assignPetToOwner(Owner owner, String name, PetType petType, LocalDate birthDate) {
@@ -66,15 +85,16 @@ public class DataLoader implements CommandLineRunner {
         owner.setTelephone(telephone);
         return owner;
     }
-    private Vet saveVet(String firstName, String lastName) {
-        var owner = new Vet();
-        owner.setFirstName(firstName);
-        owner.setLastName(lastName);
-        return vetService.save(owner);
+    private Vet saveVet(String firstName, String lastName,Specialty... specialties) {
+        var vet = new Vet();
+        vet.setFirstName(firstName);
+        vet.setLastName(lastName);
+        vet.getSpecialities().addAll(List.of(specialties));
+        return vetService.save(vet);
     }
     private PetType savePetType(String name){
         var petType= new PetType();
         petType.setName(name);
-        return petType;
+        return petTypeService.save(petType);
     }
 }

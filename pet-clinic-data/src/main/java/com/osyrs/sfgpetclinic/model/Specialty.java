@@ -1,6 +1,6 @@
 package com.osyrs.sfgpetclinic.model;
 
-public class Speciality extends BaseEntity{
+public class Specialty extends BaseEntity{
     String description;
 
     public String getDescription() {
