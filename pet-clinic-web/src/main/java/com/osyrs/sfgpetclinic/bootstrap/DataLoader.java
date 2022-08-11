@@ -52,12 +52,12 @@ public class DataLoader implements CommandLineRunner {
         var visitDate = LocalDate.now();
         var visit = createVisit(pet1, visitDescription, visitDate);
         visitService.save(visit);
-        Specialty radiology = getSpecialty("Radiology");
+        var radiology = getSpecialty("Radiology");
         var surgery = getSpecialty("Surgery");
         var dentistry = getSpecialty("Dentistry");
         System.out.println("Loaded Specialties.....");
 
-        var vet1 = saveVet("Lenganji","Sinkamba",surgery);
+        var vet1 = saveVet("Lenganji","Sinkamba",surgery,dentistry);
         var vet2 = saveVet("Suwilanji","Sinkamba",radiology);
         System.out.println("Loaded Vets.......");
     }
