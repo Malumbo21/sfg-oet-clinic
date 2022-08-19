@@ -60,6 +60,7 @@
             <artifactId>font-awesome</artifactId>
             <version>${webjars-font-awesome.version}</version>
         </dependency>
+
     </dependencies>
     <repositories>
         <repository>
