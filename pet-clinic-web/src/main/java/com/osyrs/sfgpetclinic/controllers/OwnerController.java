@@ -39,13 +39,12 @@ public class OwnerController {
             owner.setLastName("");
         }
         //find owners by lastname
-        var results = ownerService.findAllByLastNameLike(owner.getLastName());
+        var results = ownerService.findAllByLastNameLike("%"+owner.getLastName()+"%");
         if (results.isEmpty()) {
             result.rejectValue("lastName", "notFound", "not found");
             return "owners/findOwners";
         } else if (results.size() == 1) {
-            owner = results.get(0);
-            return "redirect:/owners/" + owner.getId();
+            return "redirect:/owners/" + results.get(0).getId();
         } else {
             model.addAttribute("selections", results);
             return "owners/ownersList";

@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:springpetclinic
+    driverClassName: org.h2.Driver
+    username: sa
+  jpa:
+    defer-datasource-initialization: true
+logging:
+  level:
+      org.hibernate.SQL: debug
+      org.hibernate.type.descriptor.sql: trace
+

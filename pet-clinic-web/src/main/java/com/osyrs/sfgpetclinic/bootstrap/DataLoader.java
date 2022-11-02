@@ -40,11 +40,15 @@ public class DataLoader implements CommandLineRunner {
         var owner1 = createOwner("Malumbo","Sinkamba","Off Ring Road","Lusaka","+260972139603");
         var pet1 = assignPetToOwner(owner1,"King",dogType, LocalDate.of(2020,2,2));
         var pet2 = assignPetToOwner(owner1,"Nova",catType, LocalDate.of(2019,12,18));
-        ownerService.save(owner1);
         var owner2 = createOwner("Kaluwe","Mutemwa","24 Salama","Lusaka","+260977327251");
         var pet3 = assignPetToOwner(owner2,"Sugar",dogType, LocalDate.of(2019,12,18));
-        var pet4 = assignPetToOwner(owner2,"Spike",catType, LocalDate.of(2019,12,18));
+        var pet4 = assignPetToOwner(owner2,"Simba",catType, LocalDate.of(2019,12,18));
+        var owner3 = createOwner("Elijah","Sinkamba","Chelstone","Lusaka","+260972139603");
+        var pet5 = assignPetToOwner(owner3,"Spot",dogType, LocalDate.of(2020,2,2));
+        var pet6 = assignPetToOwner(owner3,"Boost",catType, LocalDate.of(2019,12,18));
+        ownerService.save(owner1);
         ownerService.save(owner2);
+        ownerService.save(owner3);
         System.out.println("Loaded Owners.......");
         var visitDescription = "Sneezing cat";
         var visitDate = LocalDate.now();
