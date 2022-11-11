@@ -5,6 +5,4 @@ spring:
     username: sa
   jpa:
     defer-datasource-initialization: true
-logging:
-  level:
 

@@ -3,10 +3,9 @@ package com.osyrs.sfgpetclinic.controllers;
 import com.osyrs.sfgpetclinic.services.VetService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-@RequestMapping("/vets")
 public class VetController {
     private final VetService vetService;
 
@@ -14,8 +13,8 @@ public class VetController {
         this.vetService = vetService;
     }
 
-    @Index
-    public String listVets(Model model) {
+    @GetMapping("vets.html")
+    public String showVetList(Model model) {
         model.addAttribute("vets",vetService.findAll());
         return "vets/index";
     }
